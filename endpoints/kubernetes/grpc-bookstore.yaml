@@ -47,7 +47,7 @@ spec:
         image: gcr.io/endpoints-release/endpoints-runtime:1
         args: [
           "--http2_port=9000",
-          "--service=SERVICE_NAME",
+          "--service=bookstore.endpoints.endpoints-authz-test1.cloud.goog",
           "--rollout_strategy=managed",
           "--backend=grpc://127.0.0.1:8000"
         ]
