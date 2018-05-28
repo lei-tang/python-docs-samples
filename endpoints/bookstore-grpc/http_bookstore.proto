@@ -35,7 +35,14 @@ service Bookstore {
     // Define HTTP mapping.
     // Client example (Assuming your service is hosted at the given 'DOMAIN_NAME'):
     //   curl http://DOMAIN_NAME/v1/shelves
-    option (google.api.http) = { get: "/v1/shelves" };
+    // option (google.api.http) = { get: "/v1/shelves" };
+    // The following maps http OPTIONS method on /v1/shelves to the grpc method ListShelves(). 
+    // curl -X OPTIONS http://$SERVER_IP:8080/v1/shelves
+    option (google.api.http) = { custom: 
+        { kind: "OPTIONS"
+          path: "/v1/shelves"
+        };
+    };
   }
   // Creates a new shelf in the bookstore.
   rpc CreateShelf(CreateShelfRequest) returns (Shelf) {
