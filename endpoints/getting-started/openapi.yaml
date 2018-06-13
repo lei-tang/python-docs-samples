@@ -4,7 +4,11 @@ info:
   description: "A simple Google Cloud Endpoints API example."
   title: "Endpoints Example"
   version: "1.0.0"
-host: "echo-api.endpoints.YOUR-PROJECT-ID.cloud.goog"
+host: "echo-api.endpoints.endpoints-authz-test1.cloud.goog"
+x-google-endpoints:
+- name: "echo-api.endpoints.endpoints-authz-test1.cloud.goog"
+  target: "35.193.149.162"
+  
 # [END swagger]
 consumes:
 - "application/json"
@@ -34,7 +38,8 @@ paths:
         schema:
           $ref: "#/definitions/echoMessage"
       security:
-      - api_key: []
+      # - api_key: []
+      - auth0_jwt: []  
   "/auth/info/googlejwt":
     get:
       description: "Returns the requests' authentication information."
@@ -91,6 +96,16 @@ definitions:
         type: "string"
 # [START securityDef]
 securityDefinitions:
+  auth0_jwt:
+      #authorizationUrl: "https://test-lt.auth0.com/authorize"
+    authorizationUrl: "https://auth.deliciousbay.com/authorize"
+    flow: "implicit"
+    type: "oauth2"
+    # x-google-issuer: "https://test-lt.auth0.com/"
+    x-google-issuer: "https://auth.deliciousbay.com/"
+    # x-google-jwks_uri: "https://test-lt.auth0.com/.well-known/jwks.json"
+    x-google-jwks_uri: "https://auth.deliciousbay.com/.well-known/jwks.json"
+    x-google-audiences: "http://google_api"    
   # This section configures basic authentication with an API key.
   api_key:
     type: "apiKey"

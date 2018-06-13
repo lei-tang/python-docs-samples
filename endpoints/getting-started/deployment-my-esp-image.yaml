@@ -12,20 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: esp-echo
-spec:
-  ports:
-  - port: 80
-    targetPort: 8081
-    protocol: TCP
-    name: http
-  selector:
-    app: esp-echo
-  type: LoadBalancer
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -40,19 +26,19 @@ spec:
       containers:
       # [START esp]
       - name: esp
-        #image: gcr.io/endpoints-release/endpoints-runtime:1
+        # Use my own endpoints image
         image: gcr.io/endpoints-authz-test1/endpoints-runtime:1
         imagePullPolicy: Always
-        #args: [
-        #  "--http_port=8081",
-        #  "--backend=127.0.0.1:8080",
-        #  "--service=echo-api.endpoints.endpoints-authz-test1.cloud.goog",
-        #  "--rollout_strategy=managed",
-        #]
+        #  args: [
+        #    "--http_port=8081",
+        #    "--backend=127.0.0.1:8080",
+        #    "--service=echo-api.endpoints.endpoints-authz-test1.cloud.goog",
+        #    "--rollout_strategy=managed",
+        #  ]
       # [END esp]
-        ports:
-        - containerPort: 8081
-      - name: echo
-        image: gcr.io/google-samples/echo-python:1.0
-        ports:
-        - containerPort: 8080
+        # ports:
+        # - containerPort: 8081
+        # - name: echo
+        # - image: gcr.io/google-samples/echo-python:1.0
+        # - ports:
+        # - - containerPort: 8080
